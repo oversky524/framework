@@ -45,8 +45,8 @@ class Pgsql extends Connection
     public function getFields($tableName)
     {
 
-        list($tableName) = explode(' ', $tableName);
-        $sql             = 'select fields_name as "field",fields_type as "type",fields_not_null as "null",fields_key_name as "key",fields_default as "default",fields_default as "extra" from table_msg(\'' . $tableName . '\');';
+        list($schema, $tableName) = explode('.', $tableName);
+        $sql             = 'select fields_name as "field",fields_type as "type",fields_not_null as "null",fields_key_name as "key",fields_default as "default",fields_default as "extra" from table_msg(\'' . $schema . '\',\'' . $tableName . '\');';
 
         $pdo    = $this->query($sql, [], false, true);
         $result = $pdo->fetchAll(PDO::FETCH_ASSOC);
